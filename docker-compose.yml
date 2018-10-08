@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  omeka-s:
+    build: .
+    restart: always
+    environment:
+      DB_USER: $DB_USER
+      DB_PASS: $DB_PASS
+      DB_NAME: $DB_NAME
+      DB_HOST: $DB_HOST
+      DB_BACKUP: $DB_BACKUP
+      SITE_BACKUP: $SITE_BACKUP
+      MODULE_FILE: $MODULE_FILE
+      OMEKA_VER: $OMEKA_VER
+    ports:
+      - 80:80
+    volumes:
+      - omeka-s-content:/var/www/html
+
+volumes:
+  omeka-s-content:
