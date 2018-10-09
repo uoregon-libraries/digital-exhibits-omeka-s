@@ -30,6 +30,7 @@ The environment contains a lot of the base config. Reference the table below for
 | $DB_UNIX_SOCKET | Omeka database socket |
 | $DB_LOG_PATH | Omeka path to log database activity |
 | $DB_BACKUP | File path to database backup to import from. A database import will only occur if no database of $DB_NAME exists on $DB_HOST. On an interactive terminal, startup will ask if you want to dump before importing, otherwise no dump will occur. |
+| $HOST_PORT | Port to expose container on |
 
 ## Init
 The initialization process does the following on omeka-s service startup:

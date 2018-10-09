@@ -12,4 +12,4 @@ services:
       DB_BACKUP: $DB_BACKUP
       SITE_BACKUP: $SITE_BACKUP
     ports:
-      - 80:80
+      - $HOST_PORT:80
