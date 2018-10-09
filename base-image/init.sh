@@ -31,7 +31,7 @@ fi
 ### Import DB Backup ###
 # Redeploy DB if backup is set and database isn't present
 if [[ -n "${DB_BACKUP}" ]] && [[ -f "${DB_BACKUP}" ]]; then
-  echo "Attempting DB Restore"
+  echo "$0: Attempting DB Restore"
   # Test our connection to MySQL server and fail out if we can't connect
   database=$(mysql --user=${DB_USER} --password=${DB_PASS} --host=${DB_HOST} -sNe "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='${DB_NAME}'")
   [[ $? = 0 ]] || exit $?
@@ -40,14 +40,14 @@ if [[ -n "${DB_BACKUP}" ]] && [[ -f "${DB_BACKUP}" ]]; then
   CHOICE="N"
   [[ -t 0 ]] && [[ -n $database ]] && read -p "Dump database ${DB_NAME} and import backup ${DB_BACKUP} (Y/*)[N] " CHOICE
   if [[ ${CHOICE} =~ ^[Yy].* ]]; then
-    echo "Dumping Database..."
+    echo "$0: Dumping Database..."
     mysql --user=${DB_USER} --password=${DB_PASS} --host=${DB_HOST} --execute="DROP DATABASE ${DB_NAME};"
     database=""
   fi
 
   # Create DB and import if no DB exists
   if [[ -z $database ]]; then
-    echo "Importing Database..."
+    echo "$0: Importing Database..."
     mysql --user=${DB_USER} --password=${DB_PASS} --host=${DB_HOST} --execute="CREATE DATABASE IF NOT EXISTS ${DB_NAME};"
     mysql --user=${DB_USER} --password=${DB_PASS} --host=${DB_HOST} --database=${DB_NAME} < ${DB_BACKUP}
   fi
