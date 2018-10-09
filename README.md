@@ -27,16 +27,13 @@ The environment contains a lot of the base config. Reference the table below for
 | $DB_BACKUP | File path to database backup to import from. A database import will only occur if no database of $DB_NAME exists on $DB_HOST. On an interactive terminal, startup will ask if you want to dump before importing, otherwise no dump will occur. |
 | $SITE_BACKUP | File path to compressed Omeka webroot. A site backup will only be used if the .htaccess file does not exist at $OMEKA_PATH. If no .htaccess exists and $OMEKA_PATH and no $DB_BACKUP is defined, Omeka will be downloaded from GitHub. |
 | $OMEKA_PATH | The path to Omeka webroot |
-| $OMEKA_VER | Version of Omeka to download if $SITE_BACKUP is not set. Include the leading 'v'. If no value provided, init will grab the latest version |
 | $MODULE_FILE | File path to a line separated list of modules to download and install. |
 | $LOG_LEVEL | Apache log level to use |
 
 ## Init
 The initialization process does the following on omeka-s service startup:
-- Download Omeka-s if no .htaccess exists at $OMEKA_PATH. Use $SITE_BACKUP or $OMEKA_VER or latest GitHub release as set.
-- Setup Omeka database.ini file.
+- Setup Omeka database.ini file based on env vars
 - Import $DB_BACKUP if setup
-- Configure Apache2 to write logs to stdout/docker logs
 - Run additional scripts
   - You can define additional \*.sh scripts at `/docker-entrypoint/` to run on startup.
   - A failed script here will **NOT** fail service startup.

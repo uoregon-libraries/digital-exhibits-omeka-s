@@ -1,48 +1,13 @@
 #!/usr/bin/env bash
 OMEKA_PATH=${OMEKA_PATH:-"/var/www/html"}
 shopt -s nullglob dotglob
-
+cat /etc/apache2/apache2.conf  | grep ErrorLog
 # Premptively start mysql daemon
 /usr/bin/mysqld_safe --timezone=${DATE_TIMEZONE}&
 
 
 
 ### Install Omeka-S ###
-# Install if Omeka path is empty
-if [[ ! -f "${OMEKA_PATH}/.htaccess" ]]; then
-  echo "Installing Omeka-s"
-  # Install from backup if exists
-  if [[ -n "${SITE_BACKUP}" ]] && [[ -f "${SITE_BACKUP}" ]]; then
-    case $(file --mime-type -b "${SITE_BACKUP}") in
-        application/x-gzip)
-          tar -xzvf ${SITE_BACKUP} -C ${OMEKA_PATH}
-          ;;
-        application/zip)
-          unzip -q ${SITE_BACKUP} -d ${OMEKA_PATH}
-          ;;
-        *)
-          echo "${SITE_BACKUP} uses an unknown backup compression method"
-          exit 0
-          ;;
-    esac
-    echo "Installed from backup: ${SITE_BACKUP}"
-  # Otherwise install fresh
-  else
-    if [[ -n "${OMEKA_VER}" ]]; then
-      tag=${OMEKA_VER}
-    else
-      tag=$(curl --silent https://api.github.com/repos/omeka/omeka-s/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-    fi
-    url=https://github.com/omeka/omeka-s/releases/download/$tag/omeka-s-${tag:1}.zip
-    echo "Downloading Omeka-S from: ${url}"
-    curl -sSL ${url} -o omeka.zip
-    unzip -qn omeka.zip -d ${OMEKA_PATH}
-    mv ${OMEKA_PATH}/omeka-s/* ${OMEKA_PATH}
-    rm ${OMEKA_PATH}/omeka-s -rf
-    echo "Installed official release"
-  fi
-  rm ${OMEKA_PATH}/index.html
-fi
 # Install Omeka modules
 if [[ -n "${MODULE_FILE}" ]] && [[ -f "${MODULE_FILE}" ]]; then
   while read m; do
@@ -57,7 +22,7 @@ if [[ -n "${THEME_FILE}" ]] && [[ -f "${THEME_FILE}" ]]; then
   while read t; do
     echo "Installing theme: $t"
     curl -sSL "$t" -o "theme.zip"
-    unzip -qn module.zip -d ${OMEKA_PATH}/themes/
+    unzip -qn theme.zip -d ${OMEKA_PATH}/themes/
     rm theme.zip
   done < ${THEME_FILE}
 fi
@@ -111,14 +76,6 @@ if [[ -n "${DB_BACKUP}" ]] && [[ -f "${DB_BACKUP}" ]]; then
     mysql --user=${DB_USER} --password=${DB_PASS} --host=${DB_HOST} --database=${DB_NAME} < ${DB_BACKUP}
   fi
 fi
-
-### Apache2 Config ###
-# Enable proper Apache logging
-sed -ri \
-    -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/1/fd/1!g' \
-    -e 's!^(\s*TransferLog)\s+\S+!\1 /proc/1/fd/1!g' \
-    -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/1/fd/2!g' \
-    /etc/apache2/apache2.conf /etc/apache2/*-enabled/*.conf
 
 
 
