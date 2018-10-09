@@ -52,6 +52,15 @@ if [[ -n "${MODULE_FILE}" ]] && [[ -f "${MODULE_FILE}" ]]; then
     rm module.zip
   done < ${MODULE_FILE}
 fi
+# Install Omeka themes
+if [[ -n "${THEME_FILE}" ]] && [[ -f "${THEME_FILE}" ]]; then
+  while read t; do
+    echo "Installing theme: $t"
+    curl -sSL "$t" -o "theme.zip"
+    unzip -qn module.zip -d ${OMEKA_PATH}/themes/
+    rm theme.zip
+  done < ${THEME_FILE}
+fi
 chown -R www-data:www-data ${OMEKA_PATH}
 
 
