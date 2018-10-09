@@ -1,31 +1,7 @@
 #!/usr/bin/env bash
 OMEKA_PATH=${OMEKA_PATH:-"/var/www/html"}
-shopt -s nullglob dotglob
-cat /etc/apache2/apache2.conf  | grep ErrorLog
-# Premptively start mysql daemon
-/usr/bin/mysqld_safe --timezone=${DATE_TIMEZONE}&
 
-
-
-### Install Omeka-S ###
-# Install Omeka modules
-if [[ -n "${MODULE_FILE}" ]] && [[ -f "${MODULE_FILE}" ]]; then
-  while read m; do
-    echo "Installing module: $m"
-    curl -sSL "$m" -o "module.zip"
-    unzip -qn module.zip -d ${OMEKA_PATH}/modules/
-    rm module.zip
-  done < ${MODULE_FILE}
-fi
-# Install Omeka themes
-if [[ -n "${THEME_FILE}" ]] && [[ -f "${THEME_FILE}" ]]; then
-  while read t; do
-    echo "Installing theme: $t"
-    curl -sSL "$t" -o "theme.zip"
-    unzip -qn theme.zip -d ${OMEKA_PATH}/themes/
-    rm theme.zip
-  done < ${THEME_FILE}
-fi
+### Make sure Apache permissions are set ###
 chown -R www-data:www-data ${OMEKA_PATH}
 
 

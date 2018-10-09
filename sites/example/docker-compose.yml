@@ -1,8 +1,8 @@
-version: "2"
+version: "3"
 
 services:
   omeka-s:
-    build: ./base-image
+    build: .
     restart: always
     environment:
       DB_USER: $DB_USER
@@ -11,7 +11,5 @@ services:
       DB_HOST: $DB_HOST
       DB_BACKUP: $DB_BACKUP
       SITE_BACKUP: $SITE_BACKUP
-      MODULE_FILE: $MODULE_FILE
-      THEME_FILE: $THEME_FILE
     ports:
       - 80:80

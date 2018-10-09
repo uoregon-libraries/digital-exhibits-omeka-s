@@ -1,5 +1,7 @@
 FROM php:7.1-apache
 
+ENV OMEKA_PATH /var/www/html
+
 # Install Omeka-s dependencies
 RUN apt-get update && \
     apt-get install -y apt-utils \
@@ -35,11 +37,12 @@ RUN sed -ri \
 # Create a default php.ini
 COPY ./php.ini /usr/local/etc/php/
 
+COPY ./install-modules.sh /usr/sbin/install-modules.sh
+COPY ./install-themes.sh /usr/sbin/install-themes.sh
 COPY ./init.sh /usr/sbin/init.sh
 RUN chmod +x /usr/sbin/init.sh
 ENTRYPOINT ["/usr/sbin/init.sh"]
 
 EXPOSE 80
-EXPOSE 3306
 
 CMD ["apache2-foreground"]
