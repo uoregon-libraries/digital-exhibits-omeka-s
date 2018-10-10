@@ -17,8 +17,8 @@ RUN apt-get update && \
     imagemagick
 RUN pecl install mcrypt-1.0.0
 RUN docker-php-ext-enable mcrypt
-RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql gd
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql gd
 RUN a2enmod rewrite
 
 # Install Omeka-s
