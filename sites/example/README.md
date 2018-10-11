@@ -1,19 +1,24 @@
 # Setup
 Dev and Prod follow the same basic setup instructions. Specifics may differ based on your environments.
 - Install [Docker](https://www.docker.com/get-started)
+- Make omeka-s-base image in base-image folder: `make`
+  - Optional: Tag your base image: `make tag`
 - Copy example site to a new site folder
--
+- Copy env_make.example to env_make
+- Fill out env_make vars as you see fit for your site specific image
 - Copy .env.example to .env
-- Fill out env vars as you see fit
+- Fill out .env vars as you see fit
 - Copy modules.example and themes.example to modules and themes respectively
-- Fill out modules and themes as you see fit
+- Fill out modules and themes as per your site requirements
 - Copy docker-compose.override.example.yml to docker-compose.override.yml
-- Fill in volumes, env vars, and services as you see fit.
+- Fill in image, volumes, env vars, and services as you see fit.
   - A minimal dev setup is provided
   - A minimal prod setup would involve:
     - Delete the db service
     - Point your DB env vars to a persistent DB
     - Uncomment and setup the files volume for persistent storage
+- Build your site specific image: `make`
+  - Optional: Tag your site specific image: `make tag`
 - `docker-compose up -d`
 
 # Configuration
