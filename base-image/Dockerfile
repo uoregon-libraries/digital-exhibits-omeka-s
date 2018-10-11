@@ -40,7 +40,7 @@ COPY ./php.ini /usr/local/etc/php/
 COPY ./install-modules.sh /usr/sbin/install-modules.sh
 COPY ./install-themes.sh /usr/sbin/install-themes.sh
 COPY ./init.sh /usr/sbin/init.sh
-RUN chmod +x /usr/sbin/init.sh
+RUN chmod +x /usr/sbin/install-modules.sh /usr/sbin/install-themes.sh /usr/sbin/init.sh
 ENTRYPOINT ["/usr/sbin/init.sh"]
 
 EXPOSE 80
