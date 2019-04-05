@@ -5,16 +5,18 @@ ENV OMEKA_PATH /var/www/html
 # Install Omeka-s dependencies
 RUN apt-get update && \
     apt-get install -y apt-utils \
-    zip \
-    unzip \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libpng-dev \
-    libmemcached-dev \
-    zlib1g-dev \
-    mysql-client \
-    imagemagick
+      zip \
+      unzip \
+      libfreetype6-dev \
+      libjpeg62-turbo-dev \
+      libmcrypt-dev \
+      libpng-dev \
+      libmemcached-dev \
+      zlib1g-dev \
+      mysql-client \
+      imagemagick \
+      sendmail && \
+    rm -rf /var/lib/apt/lists/*
 RUN pecl install mcrypt-1.0.0
 RUN docker-php-ext-enable mcrypt
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
@@ -34,8 +36,11 @@ RUN sed -ri \
     -e 's!^(\s*TransferLog)\s+\S+!\1 /proc/1/fd/1!g' \
     -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/1/fd/2!g' \
     /etc/apache2/apache2.conf /etc/apache2/*-enabled/*.conf
-# Create a default php.ini
-COPY ./php.ini /usr/local/etc/php/
+
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+# Add our overrides
+COPY ./overrides.ini $PHP_INI_DIR/conf.d/
 
 COPY ./install-modules.sh /usr/sbin/install-modules.sh
 COPY ./install-themes.sh /usr/sbin/install-themes.sh

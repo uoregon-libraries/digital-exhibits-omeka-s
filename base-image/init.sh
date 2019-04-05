@@ -55,6 +55,12 @@ fi
 
 
 
+### Configure sendmail
+echo "127.0.0.1 $(hostname) localhost localhost.localdomain" >> /etc/hosts
+service sendmail restart
+
+
+
 ### Run Additional .sh Scripts ###
 for f in /docker-entrypoint/*; do
 	case "$f" in
