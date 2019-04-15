@@ -10,4 +10,8 @@ COPY ./themes $THEME_FILE
 RUN /usr/sbin/install-modules.sh
 RUN /usr/sbin/install-themes.sh
 
+# Configure vanity URLs
+COPY ./config/vanity-url.conf /etc/apache2/conf-available/vanity-url.conf
+RUN sed -ri 's/#*Include conf-available\/serve-cgi-bin.conf/Include conf-available\/vanity-url.conf/' /etc/apache2/sites-*/*.conf
+
 CMD ["apache2-foreground"]
