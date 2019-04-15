@@ -15,13 +15,15 @@ RUN apt-get update && \
       zlib1g-dev \
       mysql-client \
       imagemagick \
+      libmagickwand-dev \
       sendmail && \
     rm -rf /var/lib/apt/lists/*
 RUN pecl install mcrypt-1.0.0
-RUN docker-php-ext-enable mcrypt
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql gd
-RUN a2enmod rewrite
+RUN pecl install imagick
+RUN docker-php-ext-enable mcrypt imagick
+# RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql
+RUN a2enmod rewrite proxy proxy_http proxy_html
 
 # Install Omeka-s
 RUN curl -sSL https://github.com/omeka/omeka-s/releases/download/v1.4.0/omeka-s-1.4.0.zip -o omeka.zip && \
