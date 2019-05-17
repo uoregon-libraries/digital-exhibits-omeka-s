@@ -2,7 +2,7 @@
 OMEKA_PATH=${OMEKA_PATH:-"/var/www/html"}
 
 ### Make sure Apache permissions are set ###
-chown -R www-data:www-data ${OMEKA_PATH}
+find ${OMEKA_PATH} -not -user www-data | xargs chown www-data:www-data
 
 
 
