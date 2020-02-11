@@ -16,6 +16,7 @@ services:
 
   db:
     image: mariadb:10.4-bionic
+    restart: always
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 1
       MYSQL_USER: $DB_USER
