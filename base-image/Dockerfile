@@ -26,7 +26,7 @@ RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql
 RUN a2enmod rewrite proxy proxy_http proxy_html
 
 # Install Omeka-s
-RUN curl -sSL https://github.com/omeka/omeka-s/releases/download/v2.1.0/omeka-s-2.1.0.zip -o omeka.zip && \
+RUN curl -sSL https://github.com/omeka/omeka-s/releases/download/v3.0.1/omeka-s-3.0.1.zip -o omeka.zip && \
     unzip -oq omeka.zip -d /var/www/html && \
     cp -Rp /var/www/html/omeka-s/. /var/www/html && \
     rm omeka.zip /var/www/html/omeka-s -rf
