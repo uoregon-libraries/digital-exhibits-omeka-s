@@ -1,4 +1,4 @@
-FROM php:7.1-apache-stretch
+FROM php:7.3-apache-stretch
 
 ENV OMEKA_PATH /var/www/html
 
@@ -18,7 +18,7 @@ RUN apt-get update && \
       libmagickwand-dev \
       sendmail && \
     rm -rf /var/lib/apt/lists/*
-RUN pecl install mcrypt-1.0.0
+RUN pecl install mcrypt-1.0.6
 RUN pecl install imagick
 RUN docker-php-ext-enable mcrypt imagick
 # RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
