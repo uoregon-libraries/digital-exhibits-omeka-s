@@ -2,7 +2,8 @@
 OMEKA_PATH=${OMEKA_PATH:-"/var/www/html"}
 
 ### Make sure Apache permissions are set ###
-find ${OMEKA_PATH} -not -user www-data -name files -prune -o | xargs chown www-data:www-data
+#TODO: fix this line (possibly needs -print after the -o), or permanently remove?
+#find ${OMEKA_PATH} -not -user www-data -name files -prune -o | xargs chown www-data:www-data
 
 
 
