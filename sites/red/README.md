@@ -3,7 +3,7 @@ There are two customized sections of the Red Thread site that aren't documented 
 
 ## Theme Settings
 
-### Footer Logo Setting
+### Footer Logos Content
 
 ```html
 <div class="row">
