@@ -1,4 +1,4 @@
-FROM omeka-s-base:latest
+FROM omeka-s-base:3.2.3-1.0.0
 
 # Import module and theme definitions
 ENV MODULE_FILE /opt/modules
