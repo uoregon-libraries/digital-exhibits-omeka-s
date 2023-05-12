@@ -2,7 +2,7 @@ version: "3"
 
 services:
   omeka-s-red:
-    image: omeka-s-red:20230330
+    image: omeka-s-red:3.2.3-1.0.0
     restart: always
     environment:
       DB_USER: $DB_USER
@@ -13,6 +13,7 @@ services:
       SITE_BACKUP: $SITE_BACKUP
     ports:
       - $HOST_PORT:80
+
   db:
     image: mariadb:10.4-bionic
     restart: always
@@ -21,5 +22,3 @@ services:
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASS
       MYSQL_DATABASE: $DB_NAME
-    volumes:
-      - $DB_LOCATION:/var/lib/mysql

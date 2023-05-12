@@ -1,4 +1,4 @@
-FROM php:7.3-apache-stretch
+FROM php:8.1.4-apache-buster
 
 ENV OMEKA_PATH /var/www/html
 
@@ -13,7 +13,7 @@ RUN apt-get update && \
       libpng-dev \
       libmemcached-dev \
       zlib1g-dev \
-      mysql-client \
+      default-mysql-client \
       imagemagick \
       libmagickwand-dev \
       sendmail && \
@@ -26,7 +26,7 @@ RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql
 RUN a2enmod rewrite proxy proxy_http proxy_html
 
 # Install Omeka-s
-RUN curl -sSL https://github.com/omeka/omeka-s/releases/download/v2.1.0/omeka-s-2.1.0.zip -o omeka.zip && \
+RUN curl -sSL https://github.com/omeka/omeka-s/releases/download/v3.2.3/omeka-s-3.2.3.zip -o omeka.zip && \
     unzip -oq omeka.zip -d /var/www/html && \
     cp -Rp /var/www/html/omeka-s/. /var/www/html && \
     rm omeka.zip /var/www/html/omeka-s -rf

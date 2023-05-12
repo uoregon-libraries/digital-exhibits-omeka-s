@@ -6,7 +6,6 @@ OMEKA_PATH=${OMEKA_PATH:-"/var/www/html"}
 #find ${OMEKA_PATH} -not -user www-data -name files -prune -o | xargs chown www-data:www-data
 
 
-
 ### Generate Omeka-S Database Config ###
 DBUSER=${DB_USER:-omeka}
 DBPASS=${DB_PASS:-omeka}
