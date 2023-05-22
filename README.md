@@ -13,7 +13,7 @@ Both instances are running Omeka-S v3.2.3. The sites are using the following cus
 - [Light Theme (v1.3.0)](https://github.com/uoregon-libraries/UO-Library-Omeka-S-Theme)
 - [Dark Theme (v1.3.2)](https://github.com/uoregon-libraries/UO-Library-Omeka-S-Theme-Dark)
 
-## Development
+## Local Development
 
 ### Building image
 
@@ -38,13 +38,13 @@ make tag-version
 
 Then, to build the specific instance of Omeka, cd into the corresponding subdirectory of the `sites` directory, and repeat the make process there.
 
-You will also need to create a .env file, and docker-compose.override to set up the db container.
+You will also need to create a .env file, and docker-compose.override to set up the db container. For local development, you can copy the contents of .env.example and docker-compose.override.example.
 
-Use `docker-compose up -d` to start the specific container.
+Use `docker-compose up` to start the specific container.
 
 ### Database Setup
 
-You will need a sql dump of the production image which you will need to copy into the db container and set up. **Be careful as this will remove any existing database in the container.** The steps are as follows
+You will need a sql dump of the production image which you will need to copy into the db container and set up. **Be careful as this will be a full reset of the database.** The steps are as follows
 
 ```bash
 docker cp SQL_DUMP_FILE.sql DB_CONTAINER_ID:/tmp
@@ -70,19 +70,17 @@ Afterwards, migrate the database, and go to the localhost version of the site wh
 
 ### User Setup
 
-If you are not already set up as an administrator for the instance, manually add yourself to the sql dump file used in the previous step. Find where the other admins are defined.
+If you are not already set up as an administrator for the instance, manually add yourself to the sql dump file used in the previous step. The other admins are defined in the `user` table.
 
-The password will need to be hashed using the default php `password_hash()` function (for php 7.1).
+The password can be hashed using the default php `password_hash()` function (for php 7.1).
 
 ## Static Files
 
-In production, both instances of Omeka serve static files from a mounted directory on a UO server. The location of this directory will be specified as a volume in a docker-compose.override file.
+In production, both instances of Omeka serve static files from a mounted directory on a UO server. The location of this directory will be specified as a volume in the docker-compose.override file.
 
 In development, the containers will serve static images from a local directory. Again, this will be reflected in the docker-compose override. The container will need to have write privileges to this directory in order to install Omeka-S correctly.
 
 ## Other Config
-
-Some additional config beyond what’s already in the repository.
 
 ### Footers
 
