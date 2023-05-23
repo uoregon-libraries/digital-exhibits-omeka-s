@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  omeka-s-mellon:
+    volumes:
+      - ./files:/var/www/html/files
+
+  db:
+    volumes:
+      - omeka-s-mysql-data:/var/lib/mysql
+
+volumes:
+  omeka-s-mysql-data:

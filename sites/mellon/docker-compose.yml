@@ -2,7 +2,7 @@ version: "3"
 
 services:
   omeka-s-mellon:
-    image: omeka-s-mellon:latest
+    image: omeka-s-mellon:3.2.3-1.0.0
     restart: always
     environment:
       DB_USER: $DB_USER
@@ -22,5 +22,3 @@ services:
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASS
       MYSQL_DATABASE: $DB_NAME
-    volumes:
-      - $DB_LOCATION:/var/lib/mysql
