@@ -7,7 +7,7 @@ Some modules and themes may have configured settings that may not automatically 
 ### Footer Logos Content
 
 ```html
-<img src="http://omekas.digitalscholarship.reclaim.hosting/files/original/b67f4d926cb8ea2aa980ea525d15b5d39218f58c.png" alt="University of Oregon sponsored by Jordan Schnitzer Museum of Art">
+<img src="https://pages.uoregon.edu/mfgaede/libraryjsmalogo.png" alt="University of Oregon sponsored by Jordan Schnitzer Museum of Art">
 ```
 
 ### Footer Sponsers Content
@@ -32,7 +32,7 @@ This work is licensed under a <a href="https://creativecommons.org/licenses/by-n
 ### Footer Logos Content
 
 ```html
-<img src="http://omekas.digitalscholarship.reclaim.hosting/files/original/b67f4d926cb8ea2aa980ea525d15b5d39218f58c.png" alt="University of Oregon sponsored by Jordan Schnitzer Museum of Art">
+<img src="https://pages.uoregon.edu/mfgaede/libraryjsmalogo.png" alt="University of Oregon sponsored by Jordan Schnitzer Museum of Art">
 ```
 
 ### Footer Sponsors Content
@@ -57,7 +57,7 @@ This work is licensed under a <a href="https://creativecommons.org/licenses/by-n
 ### Footer Logos Content
 
 ```html
-<img src="http://omekas.digitalscholarship.reclaim.hosting/files/original/b67f4d926cb8ea2aa980ea525d15b5d39218f58c.png" alt="University of Oregon sponsored by Jordan Schnitzer Museum of Art">
+<img src="https://pages.uoregon.edu/mfgaede/libraryjsmalogo.png" alt="University of Oregon sponsored by Jordan Schnitzer Museum of Art">
 ```
 
 ### Footer Sponsors Content
