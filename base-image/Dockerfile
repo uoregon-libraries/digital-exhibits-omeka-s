@@ -1,4 +1,4 @@
-FROM php:8.1.4-apache-buster
+FROM php:8.1.12-apache-buster
 
 ENV OMEKA_PATH /var/www/html
 
