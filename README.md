@@ -8,7 +8,7 @@ Mellon hosts 'Tekagami and Kyōgire', 'The Artful Fabric of Collecting', 'Window
 
 These two instances are separate because of some custom features that were built into Red Thread.
 
-Both instances are running Omeka-S v3.2.3. The sites are using the following custom light and dark UO libraries themes:
+Both instances are running Omeka-S v3.2.3 on PHP 8.3. The sites are using the following custom light and dark UO libraries themes:
 
 - [Light Theme (v1.3.0)](https://github.com/uoregon-libraries/UO-Library-Omeka-S-Theme)
 - [Dark Theme (v1.3.2)](https://github.com/uoregon-libraries/UO-Library-Omeka-S-Theme-Dark)
@@ -205,8 +205,12 @@ environment variables, starts sendmail, and runs any `*.sh` scripts found in
 In the case of a future upgrade, the following things will need to happen:
 
 - Upgrade the PHP version in the `FROM` line of the `Dockerfile`. Omeka S 3.x
-  doesn't support PHP past 8.1, so newer PHP requires Omeka S 4.x. Moving off
-  Debian bullseye also means removing the `archive.debian.org` workaround.
+  doesn't officially support PHP 8.3 (4.1 and later do). The move to 8.3 was
+  made after testing both sites against copies of their production databases:
+  pages, the API, IIIF, uploads, CSV import, and settings forms all behaved the
+  same as on PHP 8.1. The only new output was "Creation of dynamic property"
+  deprecations, which production's `php.ini` doesn't log. Test the same way
+  before moving to a newer PHP, or upgrade Omeka S first.
 - Upgrade Omeka S by changing `OMEKA_VERSION` in the `Dockerfile`
 - Update any dependencies in the `Dockerfile` that may have changed in the new php version
 - Update dark and light themes in their respective repositories to be compatible with new Omeka version

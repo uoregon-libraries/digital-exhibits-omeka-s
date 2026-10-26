@@ -6,14 +6,11 @@
 # stage with "build.target", so building any site builds (or reuses from cache)
 # the same shared base.
 
-FROM docker.io/php:8.1.22-apache-bullseye AS base
+# Omeka S 3.x doesn't officially support PHP 8.3 (4.1 and later do), but both
+# sites were tested on it; see "For Future Upgrades" in README.md.
+FROM docker.io/php:8.3-apache-bookworm AS base
 
 ENV OMEKA_PATH=/var/www/html
-
-# Debian 11 (bullseye) is end-of-life, so its packages are now only on the
-# permanent archive mirror. Remove this when moving to a newer PHP image, which
-# needs Omeka S 4.x: Omeka S 3.x doesn't support PHP past 8.1.
-RUN sed -i 's|deb.debian.org|archive.debian.org|' /etc/apt/sources.list
 
 # Install Omeka-s dependencies
 RUN apt-get update && \
@@ -22,7 +19,6 @@ RUN apt-get update && \
       unzip \
       libfreetype6-dev \
       libjpeg62-turbo-dev \
-      libmcrypt-dev \
       libpng-dev \
       libmemcached-dev \
       zlib1g-dev \
@@ -31,8 +27,8 @@ RUN apt-get update && \
       libmagickwand-dev \
       sendmail && \
     rm -rf /var/lib/apt/lists/*
-RUN pecl install mcrypt-1.0.6 imagick && \
-    docker-php-ext-enable mcrypt imagick && \
+RUN pecl install imagick && \
+    docker-php-ext-enable imagick && \
     rm -rf /tmp/pear
 RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql
 RUN a2enmod rewrite proxy proxy_http proxy_html
