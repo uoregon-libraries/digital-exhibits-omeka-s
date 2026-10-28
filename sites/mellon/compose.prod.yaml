@@ -16,6 +16,12 @@ volumes:
       type: none
       o: bind
       device: ${FILES_LOCATION:?Set FILES_LOCATION in .env to the host directory holding Omeka's files}
+  sideload:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${SIDELOAD_LOCATION:?Set SIDELOAD_LOCATION in .env to the host directory holding Omeka's sideload files}
   db:
     driver: local
     driver_opts:

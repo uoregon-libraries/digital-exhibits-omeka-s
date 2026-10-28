@@ -77,4 +77,4 @@ RUN sed -ri 's/#*Include conf-available\/serve-cgi-bin.conf/Include conf-availab
 # The database's FileSideload setting points here. Nothing is sideloaded any
 # more, but the module crashes the item add/edit pages if the directory is
 # missing, so it just needs to exist.
-RUN mkdir /mnt/sideloadFiles
+VOLUME /mnt/sideloadFiles

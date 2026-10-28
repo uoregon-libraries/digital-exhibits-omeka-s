@@ -21,6 +21,7 @@ services:
       - "${HOST_PORT:-8000}:80"
     volumes:
       - files:/var/www/html/files
+      - sideload:/mnt/sideloadFiles
     depends_on:
       db:
         condition: service_healthy
@@ -46,5 +47,6 @@ services:
       start_period: 5m
 
 volumes:
-  files:
-  db:
+  files: {}
+  sideload: {}
+  db: {}
