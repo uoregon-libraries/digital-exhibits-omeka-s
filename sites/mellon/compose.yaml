@@ -38,8 +38,9 @@ services:
       - db:/var/lib/mysql
     healthcheck:
       # This only succeeds once the real server is up: while the image is
-      # initializing a new database it runs with networking disabled.
-      test: ["CMD", "mysqladmin", "ping", "--host=127.0.0.1", "--silent"]
+      # initializing a new database it runs with networking disabled. It logs in
+      # as the app's user, since otherwise every check logs a failed root login.
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysqladmin ping --host=127.0.0.1 --user=\"$$MYSQL_USER\" --silent"]
       interval: 5s
       timeout: 5s
       retries: 10
