@@ -73,3 +73,8 @@ RUN install-addons.sh modules /opt/omeka-site/modules && \
 # Configure vanity URLs, e.g. /tekagami -> /s/tekagami
 COPY sites/mellon/config/vanity-url.conf /etc/apache2/conf-available/vanity-url.conf
 RUN sed -ri 's/#*Include conf-available\/serve-cgi-bin.conf/Include conf-available\/vanity-url.conf/' /etc/apache2/sites-*/*.conf
+
+# The database's FileSideload setting points here. Nothing is sideloaded any
+# more, but the module crashes the item add/edit pages if the directory is
+# missing, so it just needs to exist.
+RUN mkdir /mnt/sideloadFiles
