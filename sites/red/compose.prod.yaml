@@ -1,0 +1,30 @@
+# Production settings, layered on top of compose.yaml. To use them, link this
+# file into place as the (git-ignored) override file, which Docker Compose and
+# podman-compose both load automatically:
+#
+#     ln -s compose.prod.yaml compose.override.yaml
+#
+# Production keeps its data in existing host directories, set in .env as
+# FILES_LOCATION and DB_LOCATION. Rather than bind-mounting those into the
+# services, this file points the named volumes from compose.yaml at them, so
+# the services themselves are configured identically in every environment.
+
+volumes:
+  files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${FILES_LOCATION:?Set FILES_LOCATION in .env to the host directory holding Omeka's files}
+  sideload:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${SIDELOAD_LOCATION:?Set SIDELOAD_LOCATION in .env to the host directory holding Omeka's sideload files}
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${DB_LOCATION:?Set DB_LOCATION in .env to the host directory holding MariaDB's data}

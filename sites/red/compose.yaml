@@ -1,0 +1,53 @@
+# Compose config for the Red Thread site (redthread.uoregon.edu). On its own
+# this is a complete local development setup: `docker compose up --build`.
+#
+# Production layers compose.prod.yaml on top of this to keep its data in
+# existing host directories. See that file and the README at the root of the
+# repository for details.
+
+services:
+  omeka:
+    build:
+      context: ../..
+      target: red
+    image: omeka-s-red
+    restart: always
+    environment:
+      DB_HOST: ${DB_HOST:-db}
+      DB_NAME: ${DB_NAME:-omeka}
+      DB_USER: ${DB_USER:-omeka}
+      DB_PASS: ${DB_PASS:-omeka}
+    ports:
+      - "${HOST_PORT:-8000}:80"
+    volumes:
+      - files:/var/www/html/files
+      - sideload:/mnt/sideloadFiles
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: docker.io/mariadb:10.4-bionic
+    restart: always
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: ${DB_NAME:-omeka}
+      MYSQL_USER: ${DB_USER:-omeka}
+      MYSQL_PASSWORD: ${DB_PASS:-omeka}
+    volumes:
+      - db:/var/lib/mysql
+    healthcheck:
+      # This only succeeds once the real server is up: while the image is
+      # initializing a new database it runs with networking disabled. It logs in
+      # as the app's user, since otherwise every check logs a failed root login.
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysqladmin ping --host=127.0.0.1 --user=\"$$MYSQL_USER\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      # Long enough for a first-run import of a production dump
+      start_period: 5m
+
+volumes:
+  files: {}
+  sideload: {}
+  db: {}

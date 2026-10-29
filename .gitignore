@@ -1,5 +1,11 @@
 .env
-docker-compose.override.yml
 *.sql
+*.sql.gz
 files/
 mysql/
+
+# Per-machine Compose overrides. Production links compose.prod.yaml here.
+compose.override.yaml
+
+# Leftover local overrides from the old setup; these can be deleted
+docker-compose.override.yml
